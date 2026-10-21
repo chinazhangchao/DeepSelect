@@ -1,6 +1,8 @@
 #pragma once
 
-#include <cute/atom/copy_traits_sm100.hpp>
+#include <cute/arch/copy_sm100.hpp>
+#include <cute/arch/copy_sm100_tma.hpp>
+#include <cute/util/type_traits.hpp>
 
 #include "kerutils/device/cuda/common.h"
 
@@ -280,21 +282,21 @@ void tmem_ld_32dp32bNx(uint32_t tmem_start, void* data_) {
 #ifndef __VSCODE_IDE__
     [&]<size_t... Is>(cute::index_sequence<Is...>) {
         if constexpr (kNumElements == 1) {
-            cute::SM100_TMEM_LOAD_32dp32b1x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_32dp32b1x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumElements == 2) {
-            cute::SM100_TMEM_LOAD_32dp32b2x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_32dp32b2x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumElements == 4) {
-            cute::SM100_TMEM_LOAD_32dp32b4x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_32dp32b4x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumElements == 8) {
-            cute::SM100_TMEM_LOAD_32dp32b8x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_32dp32b8x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumElements == 16) {
-            cute::SM100_TMEM_LOAD_32dp32b16x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_32dp32b16x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumElements == 32) {
-            cute::SM100_TMEM_LOAD_32dp32b32x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_32dp32b32x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumElements == 64) {
-            cute::SM100_TMEM_LOAD_32dp32b64x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_32dp32b64x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumElements == 128) {
-            cute::SM100_TMEM_LOAD_32dp32b128x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_32dp32b128x::copy(tmem_start, data[Is]...);
         }
     }(cute::make_index_sequence<kNumElements>{});
 #endif
@@ -533,19 +535,19 @@ void tmem_ld_16dp128bNx(uint32_t tmem_start, void* data_) {
 #ifndef __VSCODE_IDE__
     [&]<size_t... Is>(cute::index_sequence<Is...>) {
         if constexpr (kNumReplications == 1) {
-            cute::SM100_TMEM_LOAD_16dp128b1x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp128b1x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 2) {
-            cute::SM100_TMEM_LOAD_16dp128b2x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp128b2x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 4) {
-            cute::SM100_TMEM_LOAD_16dp128b4x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp128b4x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 8) {
-            cute::SM100_TMEM_LOAD_16dp128b8x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp128b8x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 16) {
-            cute::SM100_TMEM_LOAD_16dp128b16x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp128b16x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 32) {
-            cute::SM100_TMEM_LOAD_16dp128b32x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp128b32x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 64) {
-            cute::SM100_TMEM_LOAD_16dp128b64x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp128b64x::copy(tmem_start, data[Is]...);
         }
     }(cute::make_index_sequence<kNumReplications*2>{});
 #endif
@@ -560,17 +562,17 @@ void tmem_ld_16dp256bNx(uint32_t tmem_start, void* data_) {
 #ifndef __VSCODE_IDE__
     [&]<size_t... Is>(cute::index_sequence<Is...>) {
         if constexpr (kNumReplications == 1) {
-            cute::SM100_TMEM_LOAD_16dp256b1x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp256b1x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 2) {
-            cute::SM100_TMEM_LOAD_16dp256b2x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp256b2x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 4) {
-            cute::SM100_TMEM_LOAD_16dp256b4x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp256b4x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 8) {
-            cute::SM100_TMEM_LOAD_16dp256b8x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp256b8x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 16) {
-            cute::SM100_TMEM_LOAD_16dp256b16x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp256b16x::copy(tmem_start, data[Is]...);
         } else if constexpr (kNumReplications == 32) {
-            cute::SM100_TMEM_LOAD_16dp256b32x::copy(tmem_start, data[Is]...);
+            cute::SM100::TMEM::LOAD::SM100_TMEM_LOAD_16dp256b32x::copy(tmem_start, data[Is]...);
         }
     }(cute::make_index_sequence<kNumReplications*4>{});
 #endif
@@ -585,21 +587,21 @@ void tmem_st_32dp32bNx(uint32_t tmem_start, void const* data_) {
 #ifndef __VSCODE_IDE__
     [&]<size_t... Is>(cute::index_sequence<Is...>) {
         if constexpr (kNumElements == 1) {
-            cute::SM100_TMEM_STORE_32dp32b1x::copy(data[Is]..., tmem_start);
+            cute::SM100::TMEM::STORE::SM100_TMEM_STORE_32dp32b1x::copy(data[Is]..., tmem_start);
         } else if constexpr (kNumElements == 2) {
-            cute::SM100_TMEM_STORE_32dp32b2x::copy(data[Is]..., tmem_start);
+            cute::SM100::TMEM::STORE::SM100_TMEM_STORE_32dp32b2x::copy(data[Is]..., tmem_start);
         } else if constexpr (kNumElements == 4) {
-            cute::SM100_TMEM_STORE_32dp32b4x::copy(data[Is]..., tmem_start);
+            cute::SM100::TMEM::STORE::SM100_TMEM_STORE_32dp32b4x::copy(data[Is]..., tmem_start);
         } else if constexpr (kNumElements == 8) {
-            cute::SM100_TMEM_STORE_32dp32b8x::copy(data[Is]..., tmem_start);
+            cute::SM100::TMEM::STORE::SM100_TMEM_STORE_32dp32b8x::copy(data[Is]..., tmem_start);
         } else if constexpr (kNumElements == 16) {
-            cute::SM100_TMEM_STORE_32dp32b16x::copy(data[Is]..., tmem_start);
+            cute::SM100::TMEM::STORE::SM100_TMEM_STORE_32dp32b16x::copy(data[Is]..., tmem_start);
         } else if constexpr (kNumElements == 32) {
-            cute::SM100_TMEM_STORE_32dp32b32x::copy(data[Is]..., tmem_start);
+            cute::SM100::TMEM::STORE::SM100_TMEM_STORE_32dp32b32x::copy(data[Is]..., tmem_start);
         } else if constexpr (kNumElements == 64) {
-            cute::SM100_TMEM_STORE_32dp32b64x::copy(data[Is]..., tmem_start);
+            cute::SM100::TMEM::STORE::SM100_TMEM_STORE_32dp32b64x::copy(data[Is]..., tmem_start);
         } else if constexpr (kNumElements == 128) {
-            cute::SM100_TMEM_STORE_32dp32b128x::copy(data[Is]..., tmem_start);
+            cute::SM100::TMEM::STORE::SM100_TMEM_STORE_32dp32b128x::copy(data[Is]..., tmem_start);
         }
     }(cute::make_index_sequence<kNumElements>{});
 #endif
