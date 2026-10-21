@@ -21,14 +21,14 @@ class Platform(enum.Enum):
 
 
 class CudaBuildTests(unittest.TestCase):
-    def load_setup(self, os_name, cutlass_exists=True):
+    def load_setup(self, os_name, cutlass_exists=True, detected_platform=Platform.CUDA):
         os_module = types.ModuleType("os")
         os_module.__dict__.update(vars(os))
         os_module.name = os_name
 
         kernelkit = types.ModuleType("tests.kernelkit")
         kernelkit.Platform = Platform
-        kernelkit.get_current_platform = lambda: Platform.CUDA
+        kernelkit.get_current_platform = lambda: detected_platform
         tests = types.ModuleType("tests")
         tests.kernelkit = kernelkit
 
@@ -91,6 +91,11 @@ class CudaBuildTests(unittest.TestCase):
     def test_missing_cutlass(self):
         with self.assertRaisesRegex(RuntimeError, "git submodule update --init --recursive"):
             self.load_setup("nt", cutlass_exists=False)
+
+    def test_explicit_cuda_target_without_gpu(self):
+        args = self.load_setup("nt", detected_platform=Platform.CPU_ONLY)
+        self.assertEqual(args["name"], "deep_select.deep_select_cuda")
+        self.assertIn("/DDEEP_SELECT_IS_BUILD_ON_CUDA", args["extra_compile_args"]["cxx"])
 
     def test_spill_checker_tool_paths(self):
         platform = types.ModuleType("tests.kernelkit.platform")

@@ -73,6 +73,11 @@ pip install -v .
 CUDA builds require a CUDA-enabled PyTorch installation, CUDA Toolkit 12.9 or
 newer, and a C++20 compiler. The default build targets SM100a and SM103a.
 
+Platform detection checks for Ascend first, then uses `torch.cuda.is_available()`
+on Windows and Linux; it does not require `lspci`. For CUDA builds without a
+visible NVIDIA GPU, set `DEEP_SELECT_BUILD_TARGET_PLATFORM=CUDA`. This selects
+the build target only; it does not enable CUDA runtime support.
+
 ### Windows CUDA builds
 
 Use a **Native Tools Command Prompt for Visual Studio** with a CUDA-supported
@@ -92,7 +97,7 @@ architectures and the 128-bit payload representation without PyTorch or a GPU,
 put `nvcc` on `PATH` and run:
 
 ```text
-python -m unittest tests.test_cuda_build tests.test_cuda_compilation -v
+python -m unittest tests.test_platform tests.test_cuda_build tests.test_cuda_compilation -v
 ```
 
 ## Usage
