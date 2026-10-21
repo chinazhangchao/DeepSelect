@@ -30,7 +30,7 @@ float2 float2float2(const float &x) {
 }
 
 CUTE_DEVICE
-void st_shared(void* ptr, uint128_t val) {
+void st_shared(void* ptr, int128_t val) {
 #ifdef _MSC_VER
     asm volatile("st.shared.v4.b32 [%0], {%1, %2, %3, %4};"
                  :: "r"(cute::cast_smem_ptr_to_uint(ptr)),
@@ -42,12 +42,12 @@ void st_shared(void* ptr, uint128_t val) {
 
 CUTE_DEVICE
 void st_shared(void* ptr, float4 val) {
-    st_shared(ptr, *reinterpret_cast<const uint128_t*>(&val));
+    st_shared(ptr, *(int128_t*)&val);
 }
 
 CUTE_DEVICE
-uint128_t ld_shared(const void* ptr) {
-    uint128_t val;
+int128_t ld_shared(const void* ptr) {
+    int128_t val;
 #ifdef _MSC_VER
     asm volatile("ld.shared.v4.b32 {%0, %1, %2, %3}, [%4];"
                  : "=r"(val.x), "=r"(val.y), "=r"(val.z), "=r"(val.w)
@@ -60,8 +60,8 @@ uint128_t ld_shared(const void* ptr) {
 
 CUTE_DEVICE
 float4 ld_shared_float4(const void* ptr) {
-    auto temp = ld_shared(ptr);
-    return *reinterpret_cast<const float4*>(&temp);
+    int128_t temp = ld_shared(ptr);
+    return *(float4*)&temp;
 }
 
 }

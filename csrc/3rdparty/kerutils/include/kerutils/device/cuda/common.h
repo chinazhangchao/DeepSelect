@@ -40,19 +40,19 @@ using transac_bar_t = cutlass::arch::ClusterTransactionBarrier;
 
 // Opaque 128-bit payload; MSVC does not provide a scalar 128-bit integer.
 #ifdef _MSC_VER
-using uint128_t = uint4;
+using int128_t = int4;
 #else
-using uint128_t = __uint128_t;
+using int128_t = __int128_t;
 #endif
-static_assert(sizeof(uint128_t) == 16 && alignof(uint128_t) == 16);
+static_assert(sizeof(int128_t) == 16 && alignof(int128_t) == 16);
 
 CUTE_HOST_DEVICE
-constexpr uint128_t make_uint128(uint64_t low, uint64_t high) {
+constexpr int128_t make_int128(uint64_t low, uint64_t high) {
 #ifdef _MSC_VER
-    return {static_cast<uint32_t>(low), static_cast<uint32_t>(low >> 32),
-            static_cast<uint32_t>(high), static_cast<uint32_t>(high >> 32)};
+    return {static_cast<int32_t>(low), static_cast<int32_t>(low >> 32),
+            static_cast<int32_t>(high), static_cast<int32_t>(high >> 32)};
 #else
-    return (static_cast<uint128_t>(high) << 64) | low;
+    return (static_cast<int128_t>(high) << 64) | low;
 #endif
 }
 
